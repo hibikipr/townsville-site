@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>townsville.cc</title>
+<meta name="description" content="Small, self-hosted tools built at the Jedi Academy — for 3D printers, homelab security and everyday family life.">
+<meta property="og:title" content="townsville.cc">
+<meta property="og:description" content="Small, self-hosted tools built at the Jedi Academy — for 3D printers, homelab security and everyday family life.">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  /* ---- Header ---- */
+  header .wrap {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    padding: 24px 32px; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 40px; height: 40px; border-radius: 8px; box-shadow: 0 0 18px rgba(255,95,184,.35); }
+  .brand .wordmark { font-family: "Michroma"; font-size: 14px; letter-spacing: .18em; color: var(--ink); }
+  .brand .wordmark .dotcc { color: var(--gold); }
+
+  nav.primary { display: flex; gap: 28px; flex-wrap: wrap; }
+  nav.primary a {
+    font-family: "JetBrains Mono"; font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+    color: #aab2cc;
+  }
+  nav.primary a.n-printing:hover { color: var(--saber-blue); }
+  nav.primary a.n-homelab:hover { color: var(--saber-red); }
+  nav.primary a.n-everyday:hover { color: var(--gold); }
+  nav.primary a.n-github:hover { color: var(--ink); }
+
+  /* ---- Hero ---- */
+  .hero { padding: 64px 32px 88px; }
+  .hero-inner { display: flex; flex-direction: column; gap: 28px; }
+  .kicker {
+    font-family: "JetBrains Mono"; font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--saber-blue);
+  }
+  .hero h1 {
+    font-size: clamp(44px, 7vw, 84px); line-height: 1; letter-spacing: .04em;
+    background: linear-gradient(180deg, #fbe7a8 0%, #e8c36a 45%, #a9802f 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .gold-rule { height: 2px; max-width: 520px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .hero .lead {
+    font-family: "Chakra Petch"; font-weight: 400; font-size: 20px; line-height: 1.55;
+    color: var(--lead); max-width: 520px;
+  }
+  .hero .buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; padding: 14px 22px; border-radius: 999px;
+    font-family: "Chakra Petch"; font-weight: 600; font-size: 15px; transition: background-color .2s, color .2s;
+  }
+  .btn-primary { background: var(--saber-blue); color: #06101f; box-shadow: 0 0 24px rgba(76,201,255,.45); }
+  .btn-primary:hover { background: #8fdcff; color: #06101f; }
+  .btn-secondary { border: 1px solid rgba(232,195,106,.5); color: var(--gold); }
+  .btn-secondary:hover { background: rgba(232,195,106,.1); color: var(--gold-light); }
+
+  /* ---- Main / sectors ---- */
+  main { display: flex; flex-direction: column; gap: 88px; padding-bottom: 96px; }
+  .sector-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 28px; }
+  .sector-head .label { font-family: "JetBrains Mono"; font-size: 13px; letter-spacing: .2em; }
+  .sector-head h2 { font-size: 28px; letter-spacing: .06em; }
+  .sector-head .rule { flex: 1; min-width: 60px; height: 1px; }
+
+  #printing .sector-head .label { color: var(--saber-blue); }
+  #printing .sector-head .rule { background: linear-gradient(90deg, rgba(76,201,255,.5), transparent); }
+  #homelab .sector-head .label { color: var(--saber-red); }
+  #homelab .sector-head .rule { background: linear-gradient(90deg, rgba(255,77,94,.5), transparent); }
+  #everyday .sector-head .label { color: var(--gold); }
+  #everyday .sector-head .rule { background: linear-gradient(90deg, rgba(232,195,106,.5), transparent); }
+
+  .stripe { display: block; width: 36px; height: 4px; border-radius: 4px; background: var(--tint); box-shadow: 0 0 10px var(--saber), 0 0 22px var(--saber); }
+
+  /* ---- Featured card (NozzleCast) ---- */
+  .featured {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    border-radius: 18px; overflow: hidden; background: var(--card-featured);
+    border: 1px solid rgba(76,201,255,.28); box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    transition: border-color .2s; margin-bottom: 20px;
+  }
+  .featured:hover { border-color: rgba(76,201,255,.7); }
+  .featured .side-left { padding: 40px; display: flex; flex-direction: column; gap: 18px; }
+  .featured .top-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .featured .eyebrow { font-family: "JetBrains Mono"; font-size: 12px; color: var(--saber-blue); }
+  .featured .chip {
+    font-family: "JetBrains Mono"; font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(76,201,255,.14); color: var(--ink);
+  }
+  .featured .name-row { display: flex; align-items: center; gap: 18px; flex-wrap: nowrap; }
+  .featured .name-row img { width: 72px; height: 72px; border-radius: 17px; box-shadow: 0 0 22px rgba(76,201,255,.4); flex-shrink: 0; }
+  .featured h3 { font-size: clamp(24px, 3vw, 36px); }
+  .featured p.desc { font-family: "Chakra Petch"; font-size: 18px; line-height: 1.55; color: var(--lead); max-width: 460px; }
+  .featured .link-label { font-weight: 600; font-size: 15px; color: var(--saber-blue); }
+  .featured .side-right {
+    background: #eef0f4; min-height: 280px; display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .featured .side-right img { max-height: 380px; max-width: 100%; object-fit: contain; }
+
+  /* ---- Standard app card grid ---- */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+  .card {
+    display: flex; flex-direction: column; gap: 14px; padding: 28px; border-radius: 16px;
+    background: var(--card); border: 1px solid var(--line); transition: border-color .2s, color .2s;
+  }
+  .card:hover { border-color: color-mix(in srgb, var(--saber) 55%, transparent); }
+  .card.soon {
+    background: var(--card-soon); border: 1px dashed color-mix(in srgb, var(--saber) 30%, transparent);
+  }
+  .card .name-row { display: flex; align-items: center; gap: 14px; }
+  .card .name-row img { width: 56px; height: 56px; border-radius: 13px; box-shadow: 0 0 18px color-mix(in srgb, var(--saber) 35%, transparent); }
+  .card h3 { font-size: 18px; letter-spacing: .03em; }
+  .card p.desc { font-family: "Chakra Petch"; font-size: 16px; line-height: 1.55; color: var(--body); flex: 1; }
+  .card .link-label { font-family: "JetBrains Mono"; font-size: 13px; color: var(--label); }
+
+  /* ---- homeSIEM card ---- */
+  .siem-card {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 24px 48px; padding: 36px; border-radius: 16px;
+    background: var(--card); border: 1px solid var(--line); transition: border-color .2s;
+  }
+  .siem-card:hover { border-color: rgba(255,77,94,.55); }
+  .siem-card .left { display: flex; flex-direction: column; gap: 14px; }
+  .siem-card h3 { font-size: 24px; }
+  .siem-card .link-label { font-family: "JetBrains Mono"; font-size: 13px; color: #ff8f99; }
+  .siem-card .right { font-family: "Chakra Petch"; font-size: 17px; line-height: 1.6; color: var(--body); display: flex; align-items: center; }
+
+  /* ---- Footer ---- */
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    padding: 32px; font-family: "JetBrains Mono"; font-size: 13px; color: var(--muted);
+  }
+  footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/saber-mark.webp" alt="Townsville saber mark">
+      <span class="wordmark">TOWNSVILLE<span class="dotcc">.CC</span></span>
+    </div>
+    <nav class="primary" aria-label="Primary">
+      <a class="n-printing" href="#printing">3D Printing</a>
+      <a class="n-homelab" href="#homelab">Homelab</a>
+      <a class="n-everyday" href="#everyday">Everyday</a>
+      <a class="n-github" href="https://github.com/hibikipr" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <p class="kicker">A long time ago, in a homelab not so far away…</p>
+    <h1>TOWNSVILLE</h1>
+    <div class="gold-rule"></div>
+    <p class="lead">Small, self-hosted tools built at the Jedi Academy — for 3D printers, homelab security and everyday family life.</p>
+    <div class="buttons">
+      <a class="btn btn-primary" href="#printing">Explore the apps</a>
+      <a class="btn btn-secondary" href="https://github.com/hibikipr" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <section id="printing">
+    <div class="sector-head">
+      <span class="label">SECTOR 01</span>
+      <h2>3D Printing</h2>
+      <span class="rule"></span>
+    </div>
+
+    <a class="featured" href="https://nozzlecast.townsville.cc" target="_blank" rel="noopener">
+      <div class="side-left">
+        <div class="top-row">
+          <span class="stripe" style="--tint:#bff0ff; --saber:#4cc9ff;"></span>
+          <span class="eyebrow">FEATURED · iOS</span>
+          <span class="chip">TestFlight beta soon</span>
+        </div>
+        <div class="name-row">
+          <img src="assets/nozzlecast-icon.webp" alt="NozzleCast app icon">
+          <h3>NozzleCast</h3>
+        </div>
+        <p class="desc">Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket.</p>
+        <span class="link-label">nozzlecast.townsville.cc →</span>
+      </div>
+      <div class="side-right">
+        <img src="assets/nozzlecast-h2c.webp" alt="NozzleCast monitoring a Bambu Lab H2C printer">
+      </div>
+    </a>
+
+    <div class="card-grid">
+      <a class="card" href="https://github.com/hibikipr/filament_to_bambuddy" target="_blank" rel="noopener" style="--saber:#5cff7a; --tint:#d4ffdc; --label:#8dffa4;">
+        <span class="stripe"></span>
+        <div class="name-row"><h3>filament_to_bambuddy</h3></div>
+        <p class="desc">Scan a filament box and add it straight to your Bambuddy spool inventory.</p>
+        <span class="link-label">GitHub ↗</span>
+      </a>
+      <a class="card" href="https://github.com/hibikipr/bambuddy_to_manyfold" target="_blank" rel="noopener" style="--saber:#4ce6d2; --tint:#d2fff7; --label:#7cf0e0;">
+        <span class="stripe"></span>
+        <div class="name-row"><h3>bambuddy_to_manyfold</h3></div>
+        <p class="desc">Sync models from Bambuddy's file manager into your Manyfold library.</p>
+        <span class="link-label">GitHub ↗</span>
+      </a>
+      <a class="card" href="https://filatint.townsville.cc" style="--saber:#ff5fb8; --tint:#ffd6ec; --label:#ff9fd3;">
+        <span class="stripe"></span>
+        <div class="name-row">
+          <img src="assets/filatint-icon.webp" alt="FilaTint app icon">
+          <h3>FilaTint</h3>
+        </div>
+        <p class="desc">Paint your prints. Right on the glass. Multi-color painting for Bambu Studio 3MF projects, on iPhone and iPad.</p>
+        <span class="link-label">filatint.townsville.cc →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="homelab">
+    <div class="sector-head">
+      <span class="label">SECTOR 02</span>
+      <h2>Homelab</h2>
+      <span class="rule"></span>
+    </div>
+
+    <a class="siem-card" href="https://homesiem.townsville.cc">
+      <div class="left">
+        <span class="stripe" style="--tint:#ffd4d8; --saber:#ff4d5e;"></span>
+        <h3>homeSIEM</h3>
+        <span class="link-label">homesiem.townsville.cc →</span>
+      </div>
+      <div class="right">
+        A lightweight SIEM for homelabs. Collects syslog from network gear and servers, enriches it, runs correlation rules, and gives you a browser console to triage alerts — behind OIDC sign-in.
+      </div>
+    </a>
+  </section>
+
+  <section id="everyday">
+    <div class="sector-head">
+      <span class="label">SECTOR 03</span>
+      <h2>Everyday</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="card-grid">
+      <a class="card" href="https://kaireads.townsville.cc" style="--saber:#e8c36a; --tint:#fff0c8; --label:#f0d38a;">
+        <span class="stripe"></span>
+        <div class="name-row">
+          <img src="assets/kaireads-icon.webp" alt="Kai Reads app icon">
+          <h3>Kai Reads</h3>
+        </div>
+        <p class="desc">Space Phonics &amp; Reading Fun — a reading adventure across four planets for iPhone &amp; iPad.</p>
+        <span class="link-label">kaireads.townsville.cc →</span>
+      </a>
+      <a class="card" href="https://listnudge.townsville.cc" style="--saber:#b07cff; --tint:#ecdcff; --label:#cba6ff;">
+        <span class="stripe"></span>
+        <div class="name-row">
+          <img src="assets/listnudge-icon.webp" alt="ListNudge app icon">
+          <h3>ListNudge</h3>
+        </div>
+        <p class="desc">One list. Everyone's on it. Shared grocery lists, with a nudge when you're at a store you're watching.</p>
+        <span class="link-label">listnudge.townsville.cc →</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 townsville.cc · May the Force be with your prints.</span>
+    <a href="https://github.com/hibikipr" target="_blank" rel="noopener">github.com/hibikipr</a>
+  </div>
+</footer>
+</body>
+</html>

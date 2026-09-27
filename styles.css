@@ -1,0 +1,74 @@
+/* townsville.cc — shared foundation.
+   Tokens, reset, base type, and background live here. Page layout stays in index.html's own
+   <style> block, matching the sibling sites' pattern even though this one's a single page. */
+
+:root {
+  --bg: #070a18;
+  --card: rgba(14, 20, 44, .72);
+  --card-featured: rgba(14, 20, 44, .8);
+  --card-soon: rgba(14, 20, 44, .5);
+  --line: rgba(255, 255, 255, .08);
+
+  --ink: #e6e9f5;
+  --lead: #c3c9dd;
+  --body: #aab2cc;
+  --muted: #8189a3;
+
+  --gold: #e8c36a;
+  --gold-light: #fbe7a8;
+  --gold-dark: #a9802f;
+
+  --link: #7fd6ff;
+  --link-hover: #e8c36a;
+
+  --saber-blue: #4cc9ff;
+  --saber-green: #5cff7a;
+  --saber-teal: #4ce6d2;
+  --saber-pink: #ff5fb8;
+  --saber-red: #ff4d5e;
+  --saber-gold: #e8c36a;
+  --saber-purple: #b07cff;
+
+  --focus-ring: var(--saber-blue);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Chakra Petch", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  background-image:
+    radial-gradient(1200px 700px at 85% -10%, rgba(76,201,255,.14), transparent 60%),
+    radial-gradient(900px 600px at -10% 40%, rgba(255,77,94,.08), transparent 60%),
+    radial-gradient(900px 700px at 50% 110%, rgba(92,255,122,.07), transparent 60%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3 {
+  font-family: "Michroma", system-ui, sans-serif;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); }
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
