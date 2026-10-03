@@ -128,6 +128,8 @@
   }
   .siem-card:hover { border-color: rgba(255,77,94,.55); }
   .siem-card .left { display: flex; flex-direction: column; gap: 14px; }
+  .siem-card .name-row { display: flex; align-items: center; gap: 14px; }
+  .siem-card .name-row img { width: 56px; height: 56px; border-radius: 13px; box-shadow: 0 0 18px rgba(255,77,94,.35); flex-shrink: 0; }
   .siem-card h3 { font-size: 24px; }
   .siem-card .link-label { font-family: "JetBrains Mono"; font-size: 13px; color: #ff8f99; }
   .siem-card .right { font-family: "Chakra Petch"; font-size: 17px; line-height: 1.6; color: var(--body); display: flex; align-items: center; }
@@ -232,7 +234,10 @@
     <a class="siem-card" href="https://homesiem.townsville.cc">
       <div class="left">
         <span class="stripe" style="--tint:#ffd4d8; --saber:#ff4d5e;"></span>
-        <h3>homeSIEM</h3>
+        <div class="name-row">
+          <img src="assets/homesiem-icon.webp" alt="homeSIEM icon">
+          <h3>homeSIEM</h3>
+        </div>
         <span class="link-label">homesiem.townsville.cc →</span>
       </div>
       <div class="right">
