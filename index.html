@@ -120,6 +120,20 @@
   .card p.desc { font-family: "Chakra Petch"; font-size: 16px; line-height: 1.55; color: var(--body); flex: 1; }
   .card .link-label { font-family: "JetBrains Mono"; font-size: 13px; color: var(--label); }
 
+  /* Cards with a promo link. A link can't nest inside a link, so the destination link stretches
+     over the whole card (::after) and the promo link sits above it. */
+  .card.has-promo, .featured.has-promo { position: relative; }
+  .card-main { align-self: flex-start; }
+  .card-main::after { content: ""; position: absolute; inset: 0; }
+  .promo-link {
+    position: relative; z-index: 1; align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px;
+    font-family: "JetBrains Mono"; font-size: 12px; color: var(--label, var(--saber-blue));
+    border: 1px solid color-mix(in srgb, var(--label, var(--saber-blue)) 45%, transparent);
+    transition: background-color .2s, color .2s;
+  }
+  .promo-link:hover { background: color-mix(in srgb, var(--label, var(--saber-blue)) 14%, transparent); color: var(--ink); }
+
   /* ---- homeSIEM card ---- */
   .siem-card {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -180,7 +194,7 @@
       <span class="rule"></span>
     </div>
 
-    <a class="featured" href="https://nozzlecast.townsville.cc" target="_blank" rel="noopener">
+    <div class="featured has-promo">
       <div class="side-left">
         <div class="top-row">
           <span class="stripe" style="--tint:#bff0ff; --saber:#4cc9ff;"></span>
@@ -192,12 +206,13 @@
           <h3>NozzleCast</h3>
         </div>
         <p class="desc">Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket.</p>
-        <span class="link-label">nozzlecast.townsville.cc →</span>
+        <a class="link-label card-main" href="https://nozzlecast.townsville.cc" target="_blank" rel="noopener">nozzlecast.townsville.cc →</a>
+        <a class="promo-link" href="https://nozzlecast.townsville.cc/#promo-heading" target="_blank" rel="noopener"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg>Watch the 30-second promo</a>
       </div>
       <div class="side-right">
         <img src="assets/nozzlecast-h2c.webp" alt="NozzleCast monitoring a Bambu Lab H2C printer">
       </div>
-    </a>
+    </div>
 
     <div class="card-grid">
       <a class="card" href="https://github.com/hibikipr/filament_to_bambuddy" target="_blank" rel="noopener" style="--saber:#5cff7a; --tint:#d4ffdc; --label:#8dffa4;">
@@ -254,24 +269,26 @@
     </div>
 
     <div class="card-grid">
-      <a class="card" href="https://kaireads.townsville.cc" style="--saber:#e8c36a; --tint:#fff0c8; --label:#f0d38a;">
+      <div class="card has-promo" style="--saber:#e8c36a; --tint:#fff0c8; --label:#f0d38a;">
         <span class="stripe"></span>
         <div class="name-row">
           <img src="assets/kaireads-icon.webp" alt="Kai Reads app icon">
           <h3>Kai Reads</h3>
         </div>
         <p class="desc">Space Phonics &amp; Reading Fun — a reading adventure across four planets for iPhone &amp; iPad.</p>
-        <span class="link-label">kaireads.townsville.cc →</span>
-      </a>
-      <a class="card" href="https://listnudge.townsville.cc" style="--saber:#b07cff; --tint:#ecdcff; --label:#cba6ff;">
+        <a class="link-label card-main" href="https://kaireads.townsville.cc">kaireads.townsville.cc →</a>
+        <a class="promo-link" href="https://kaireads.townsville.cc/#promo-heading"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg>Watch the 30-second promo</a>
+      </div>
+      <div class="card has-promo" style="--saber:#b07cff; --tint:#ecdcff; --label:#cba6ff;">
         <span class="stripe"></span>
         <div class="name-row">
           <img src="assets/listnudge-icon.webp" alt="ListNudge app icon">
           <h3>ListNudge</h3>
         </div>
         <p class="desc">One list. Everyone's on it. Shared grocery lists, with a nudge when you're at a store you're watching.</p>
-        <span class="link-label">listnudge.townsville.cc →</span>
-      </a>
+        <a class="link-label card-main" href="https://listnudge.townsville.cc">listnudge.townsville.cc →</a>
+        <a class="promo-link" href="https://listnudge.townsville.cc/#promo-heading"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg>Watch the 30-second promo</a>
+      </div>
     </div>
   </section>
 </main>
