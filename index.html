@@ -133,6 +133,9 @@
     transition: background-color .2s, color .2s;
   }
   .promo-link:hover { background: color-mix(in srgb, var(--label, var(--saber-blue)) 14%, transparent); color: var(--ink); }
+  /* Apple's official "Download on the App Store" badge, above the stretched card-main link. */
+  .store-badge { position: relative; z-index: 1; align-self: flex-start; display: inline-block; line-height: 0; }
+  .store-badge img { height: 40px; width: auto; }
   /* Several secondary links on one card, all above the stretched card-main link. */
   .pill-row { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 
@@ -232,15 +235,18 @@
         <p class="desc">Sync models from Bambuddy's file manager into your Manyfold library.</p>
         <span class="link-label">GitHub ↗</span>
       </a>
-      <a class="card" href="https://filatint.townsville.cc" style="--saber:#ff5fb8; --tint:#ffd6ec; --label:#ff9fd3;">
+      <div class="card has-promo" style="--saber:#ff5fb8; --tint:#ffd6ec; --label:#ff9fd3;">
         <span class="stripe"></span>
         <div class="name-row">
           <img src="assets/filatint-icon.webp" alt="FilaTint app icon">
           <h3>FilaTint</h3>
         </div>
         <p class="desc">Paint your prints. Right on the glass. Multi-color painting for Bambu Studio 3MF projects, on iPhone and iPad.</p>
-        <span class="link-label">filatint.townsville.cc →</span>
-      </a>
+        <a class="link-label card-main" href="https://filatint.townsville.cc">filatint.townsville.cc →</a>
+        <a class="store-badge" href="https://apps.apple.com/us/app/filatint/id6812869640?itscg=30200&amp;itsct=apps_box_badge&amp;mttnsubad=6812869640" target="_blank" rel="noopener">
+          <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1792627200" alt="Download on the App Store">
+        </a>
+      </div>
     </div>
   </section>
 
