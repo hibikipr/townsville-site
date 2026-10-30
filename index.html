@@ -146,6 +146,34 @@
     content: ""; display: inline-block; width: 8px; height: 1em; margin-left: 4px; vertical-align: -2px;
     background: var(--saber, var(--saber-blue)); animation: hangar-pulse 1s steps(1) infinite;
   }
+  /* Launch console: the readout's own buttons, plus a QR that beams iOS apps to a phone. */
+  .readout { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: start; }
+  .readout-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
+  .launch {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;
+    font-family: "Chakra Petch"; font-weight: 600; font-size: 14px; color: #06101f;
+    background: var(--saber, var(--saber-blue)); box-shadow: 0 0 18px color-mix(in srgb, var(--saber, var(--saber-blue)) 45%, transparent);
+    transition: filter .2s, box-shadow .2s;
+  }
+  .launch:hover { color: #06101f; filter: brightness(1.15); box-shadow: 0 0 26px var(--saber, var(--saber-blue)); }
+  .launch-alt { font-family: "JetBrains Mono"; font-size: 11px; color: var(--muted); }
+  .launch-alt:hover { color: var(--saber, var(--saber-blue)); }
+  .launch-alt[hidden] { display: none; }
+  .beam { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .beam .qr {
+    display: none; width: 92px; height: 92px; border-radius: 8px; background: #eef0f4; fill: #06101f;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--saber, var(--saber-blue)) 70%, transparent), 0 0 22px color-mix(in srgb, var(--saber, var(--saber-blue)) 40%, transparent);
+  }
+  .beam .qr.is-on { display: block; }
+  .beam figcaption {
+    font-family: "JetBrains Mono"; font-size: 9px; letter-spacing: .14em; line-height: 1.4; text-align: center;
+    color: var(--saber, var(--saber-blue));
+  }
+  .beam[hidden] { display: none; }
+  /* Phones can just tap the button; the QR is for carrying a desktop visit over to an iPhone. */
+  /* Hold the console at its tallest so hovering between apps doesn't bounce the hangar. */
+  @media (hover: hover) and (min-width: 641px) { .readout { min-height: 200px; } }
+  @media (hover: none), (max-width: 640px) { .beam { display: none; } }
   @media (max-width: 520px) {
     .hangar { padding: 18px 14px 14px; }
     .bay { grid-template-columns: minmax(0, 1fr); gap: 6px; }
@@ -293,11 +321,11 @@
         <span class="bay-label">01<br>PRINTING</span>
         <div class="bay-ships">
           <a class="ship is-active" href="https://nozzlecast.townsville.cc" target="_blank" rel="noopener" style="--saber:#4cc9ff; --tint:#bff0ff;"
-             data-pitch="Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket." data-where="iOS · App Store">
+             data-pitch="Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket." data-store="https://apps.apple.com/app/id6807135097" data-qr="nozzlecast" data-where="iOS · App Store">
             <img src="assets/nozzlecast-icon.webp" alt=""><span class="ios">iOS</span><span class="ship-name">NozzleCast</span>
           </a>
           <a class="ship" href="https://filatint.townsville.cc" style="--saber:#ff5fb8; --tint:#ffd6ec;"
-             data-pitch="Paint your prints. Right on the glass. Multi-color painting for Bambu Studio 3MF projects." data-where="iPhone + iPad · App Store">
+             data-pitch="Paint your prints. Right on the glass. Multi-color painting for Bambu Studio 3MF projects." data-store="https://apps.apple.com/app/id6812869640" data-qr="filatint" data-where="iPhone + iPad · App Store">
             <img src="assets/filatint-icon.webp" alt=""><span class="ios">iOS</span><span class="ship-name">FilaTint</span>
           </a>
           <a class="ship" href="https://github.com/hibikipr/filament_to_bambuddy" target="_blank" rel="noopener" style="--saber:#5cff7a; --tint:#d4ffdc;"
@@ -325,31 +353,46 @@
         <span class="bay-label">03<br>EVERYDAY</span>
         <div class="bay-ships">
           <a class="ship" href="https://kaireads.townsville.cc" style="--saber:#e8c36a; --tint:#fff0c8;"
-             data-pitch="Space Phonics &amp; Reading Fun — a reading adventure across four planets." data-where="iPhone + iPad">
+             data-pitch="Space Phonics &amp; Reading Fun — a reading adventure across four planets." data-store="https://apps.apple.com/app/id6790004296" data-qr="kaireads" data-where="iPhone + iPad">
             <img src="assets/kaireads-icon.webp" alt=""><span class="ios">iOS</span><span class="ship-name">Kai Reads</span>
           </a>
           <a class="ship" href="https://listnudge.townsville.cc" style="--saber:#b07cff; --tint:#ecdcff;"
-             data-pitch="One list. Everyone's on it. Shared grocery lists that nudge you at the store." data-where="iPhone">
+             data-pitch="One list. Everyone's on it. Shared grocery lists that nudge you at the store." data-store="https://apps.apple.com/app/id6792314130" data-qr="listnudge" data-where="iPhone">
             <img src="assets/listnudge-icon.webp" alt=""><span class="ios">iOS</span><span class="ship-name">ListNudge</span>
           </a>
         </div>
       </div>
 
       <div class="readout" style="--saber:#4cc9ff;">
-        <div class="readout-head">
-          <span class="readout-name">NozzleCast</span>
-          <span class="readout-where">iOS · App Store</span>
+        <div>
+          <div class="readout-head">
+            <span class="readout-name">NozzleCast</span>
+            <span class="readout-where">iOS · App Store</span>
+          </div>
+          <p class="readout-pitch">Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket.</p>
+          <div class="readout-actions">
+            <a class="launch" href="https://apps.apple.com/app/id6807135097" target="_blank" rel="noopener">Get it on the App Store →</a>
+            <a class="launch-alt" href="https://nozzlecast.townsville.cc" target="_blank" rel="noopener">nozzlecast.townsville.cc</a>
+          </div>
         </div>
-        <p class="readout-pitch">Print monitoring for Bambu Lab printers, with spool scanning built in — your whole fleet, from your pocket.</p>
+        <!-- One QR per iOS app, pointing at its App Store listing; the script shows the selected one. -->
+        <figure class="beam">
+        <svg class="qr is-on" data-app="nozzlecast" viewBox="-2 -2 33 33" role="img" aria-label="QR code for NozzleCast on the App Store"><path d="M0 0h7v1H0zM10 0h1v1H10zM12 0h1v1H12zM14 0h1v1H14zM17 0h3v1H17zM22 0h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM9 1h1v1H9zM11 1h2v1H11zM15 1h3v1H15zM20 1h1v1H20zM22 1h1v1H22zM28 1h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM8 2h2v1H8zM11 2h1v1H11zM15 2h2v1H15zM20 2h1v1H20zM22 2h1v1H22zM24 2h3v1H24zM28 2h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h1v1H8zM10 3h2v1H10zM13 3h1v1H13zM15 3h3v1H15zM19 3h1v1H19zM22 3h1v1H22zM24 3h3v1H24zM28 3h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h1v1H8zM13 4h2v1H13zM18 4h3v1H18zM22 4h1v1H22zM24 4h3v1H24zM28 4h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h1v1H8zM10 5h1v1H10zM12 5h1v1H12zM15 5h2v1H15zM18 5h1v1H18zM20 5h1v1H20zM22 5h1v1H22zM28 5h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h7v1H22zM8 7h1v1H8zM10 7h3v1H10zM14 7h1v1H14zM19 7h2v1H19zM0 8h1v1H0zM2 8h5v1H2zM10 8h2v1H10zM13 8h1v1H13zM15 8h3v1H15zM19 8h1v1H19zM22 8h5v1H22zM0 9h1v1H0zM2 9h4v1H2zM8 9h2v1H8zM14 9h1v1H14zM19 9h4v1H19zM24 9h1v1H24zM28 9h1v1H28zM0 10h2v1H0zM4 10h1v1H4zM6 10h1v1H6zM13 10h4v1H13zM18 10h1v1H18zM20 10h1v1H20zM22 10h2v1H22zM0 11h3v1H0zM4 11h2v1H4zM8 11h2v1H8zM11 11h1v1H11zM14 11h2v1H14zM18 11h2v1H18zM21 11h2v1H21zM24 11h2v1H24zM27 11h1v1H27zM0 12h4v1H0zM5 12h2v1H5zM8 12h1v1H8zM10 12h1v1H10zM15 12h3v1H15zM23 12h1v1H23zM25 12h2v1H25zM1 13h1v1H1zM4 13h1v1H4zM7 13h3v1H7zM12 13h2v1H12zM19 13h6v1H19zM28 13h1v1H28zM0 14h1v1H0zM3 14h4v1H3zM8 14h1v1H8zM11 14h1v1H11zM13 14h4v1H13zM18 14h1v1H18zM21 14h1v1H21zM24 14h3v1H24zM1 15h2v1H1zM4 15h2v1H4zM7 15h1v1H7zM11 15h1v1H11zM13 15h1v1H13zM16 15h1v1H16zM18 15h3v1H18zM24 15h1v1H24zM27 15h1v1H27zM0 16h7v1H0zM8 16h3v1H8zM14 16h6v1H14zM23 16h1v1H23zM25 16h2v1H25zM0 17h1v1H0zM3 17h2v1H3zM7 17h1v1H7zM9 17h1v1H9zM11 17h1v1H11zM17 17h3v1H17zM22 17h3v1H22zM26 17h1v1H26zM28 17h1v1H28zM0 18h1v1H0zM3 18h2v1H3zM6 18h1v1H6zM8 18h2v1H8zM11 18h1v1H11zM15 18h1v1H15zM17 18h1v1H17zM20 18h2v1H20zM24 18h1v1H24zM26 18h1v1H26zM0 19h1v1H0zM2 19h1v1H2zM4 19h2v1H4zM7 19h3v1H7zM14 19h2v1H14zM20 19h2v1H20zM24 19h1v1H24zM27 19h1v1H27zM0 20h1v1H0zM2 20h3v1H2zM6 20h3v1H6zM12 20h1v1H12zM15 20h3v1H15zM20 20h5v1H20zM26 20h3v1H26zM8 21h3v1H8zM12 21h3v1H12zM17 21h2v1H17zM20 21h1v1H20zM24 21h5v1H24zM0 22h7v1H0zM9 22h1v1H9zM11 22h1v1H11zM13 22h3v1H13zM18 22h3v1H18zM22 22h1v1H22zM24 22h3v1H24zM0 23h1v1H0zM6 23h1v1H6zM8 23h2v1H8zM13 23h1v1H13zM15 23h1v1H15zM19 23h2v1H19zM24 23h1v1H24zM28 23h1v1H28zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM8 24h2v1H8zM14 24h1v1H14zM16 24h2v1H16zM20 24h5v1H20zM26 24h1v1H26zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM8 25h5v1H8zM18 25h1v1H18zM23 25h1v1H23zM25 25h4v1H25zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM8 26h3v1H8zM12 26h1v1H12zM14 26h2v1H14zM19 26h2v1H19zM22 26h6v1H22zM0 27h1v1H0zM6 27h1v1H6zM10 27h4v1H10zM16 27h1v1H16zM18 27h1v1H18zM20 27h2v1H20zM23 27h3v1H23zM27 27h1v1H27zM0 28h7v1H0zM8 28h2v1H8zM12 28h2v1H12zM15 28h5v1H15zM21 28h1v1H21zM24 28h1v1H24zM26 28h1v1H26z"/></svg>
+        <svg class="qr" data-app="filatint" viewBox="-2 -2 33 33" role="img" aria-label="QR code for FilaTint on the App Store"><path d="M0 0h7v1H0zM9 0h3v1H9zM14 0h1v1H14zM17 0h3v1H17zM22 0h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM13 1h5v1H13zM20 1h1v1H20zM22 1h1v1H22zM28 1h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM8 2h3v1H8zM12 2h1v1H12zM15 2h1v1H15zM20 2h1v1H20zM22 2h1v1H22zM24 2h3v1H24zM28 2h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h6v1H8zM16 3h2v1H16zM19 3h1v1H19zM22 3h1v1H22zM24 3h3v1H24zM28 3h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h1v1H8zM10 4h3v1H10zM14 4h1v1H14zM18 4h3v1H18zM22 4h1v1H22zM24 4h3v1H24zM28 4h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h5v1H8zM14 5h2v1H14zM18 5h1v1H18zM20 5h1v1H20zM22 5h1v1H22zM28 5h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h7v1H22zM8 7h1v1H8zM10 7h2v1H10zM16 7h1v1H16zM19 7h2v1H19zM0 8h1v1H0zM2 8h5v1H2zM9 8h5v1H9zM15 8h3v1H15zM19 8h1v1H19zM22 8h5v1H22zM2 9h4v1H2zM7 9h1v1H7zM11 9h1v1H11zM14 9h1v1H14zM19 9h4v1H19zM24 9h1v1H24zM28 9h1v1H28zM1 10h1v1H1zM3 10h2v1H3zM6 10h1v1H6zM9 10h1v1H9zM12 10h1v1H12zM15 10h1v1H15zM18 10h1v1H18zM20 10h1v1H20zM22 10h2v1H22zM0 11h3v1H0zM4 11h1v1H4zM12 11h1v1H12zM15 11h1v1H15zM18 11h2v1H18zM21 11h2v1H21zM24 11h2v1H24zM27 11h1v1H27zM0 12h3v1H0zM6 12h3v1H6zM16 12h2v1H16zM23 12h1v1H23zM25 12h2v1H25zM0 13h2v1H0zM3 13h3v1H3zM7 13h1v1H7zM9 13h1v1H9zM13 13h1v1H13zM19 13h6v1H19zM28 13h1v1H28zM2 14h5v1H2zM9 14h2v1H9zM12 14h4v1H12zM18 14h1v1H18zM21 14h1v1H21zM24 14h3v1H24zM2 15h3v1H2zM8 15h3v1H8zM12 15h2v1H12zM18 15h3v1H18zM24 15h1v1H24zM27 15h1v1H27zM0 16h3v1H0zM4 16h4v1H4zM9 16h3v1H9zM14 16h6v1H14zM23 16h1v1H23zM25 16h2v1H25zM0 17h1v1H0zM3 17h3v1H3zM8 17h5v1H8zM17 17h3v1H17zM22 17h3v1H22zM26 17h1v1H26zM28 17h1v1H28zM0 18h1v1H0zM2 18h2v1H2zM5 18h2v1H5zM9 18h3v1H9zM15 18h3v1H15zM20 18h2v1H20zM24 18h1v1H24zM26 18h1v1H26zM0 19h1v1H0zM7 19h3v1H7zM12 19h1v1H12zM14 19h2v1H14zM20 19h2v1H20zM24 19h1v1H24zM27 19h1v1H27zM0 20h1v1H0zM3 20h2v1H3zM6 20h3v1H6zM10 20h3v1H10zM15 20h3v1H15zM20 20h5v1H20zM26 20h3v1H26zM8 21h3v1H8zM12 21h3v1H12zM17 21h2v1H17zM20 21h1v1H20zM24 21h5v1H24zM0 22h7v1H0zM12 22h4v1H12zM18 22h3v1H18zM22 22h1v1H22zM24 22h3v1H24zM0 23h1v1H0zM6 23h1v1H6zM8 23h1v1H8zM10 23h1v1H10zM12 23h2v1H12zM15 23h1v1H15zM19 23h2v1H19zM24 23h1v1H24zM28 23h1v1H28zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM8 24h1v1H8zM10 24h2v1H10zM14 24h1v1H14zM16 24h2v1H16zM20 24h5v1H20zM26 24h1v1H26zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM8 25h3v1H8zM12 25h1v1H12zM18 25h1v1H18zM23 25h1v1H23zM25 25h4v1H25zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM8 26h1v1H8zM10 26h1v1H10zM14 26h2v1H14zM19 26h2v1H19zM22 26h6v1H22zM0 27h1v1H0zM6 27h1v1H6zM11 27h3v1H11zM16 27h1v1H16zM18 27h1v1H18zM20 27h2v1H20zM23 27h3v1H23zM27 27h1v1H27zM0 28h7v1H0zM8 28h2v1H8zM11 28h1v1H11zM15 28h5v1H15zM21 28h1v1H21zM24 28h1v1H24zM26 28h1v1H26z"/></svg>
+        <svg class="qr" data-app="kaireads" viewBox="-2 -2 33 33" role="img" aria-label="QR code for Kai Reads on the App Store"><path d="M0 0h7v1H0zM9 0h1v1H9zM15 0h6v1H15zM22 0h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM9 1h5v1H9zM15 1h2v1H15zM18 1h1v1H18zM20 1h1v1H20zM22 1h1v1H22zM28 1h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM9 2h2v1H9zM12 2h1v1H12zM17 2h1v1H17zM20 2h1v1H20zM22 2h1v1H22zM24 2h3v1H24zM28 2h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM9 3h3v1H9zM15 3h2v1H15zM18 3h1v1H18zM22 3h1v1H22zM24 3h3v1H24zM28 3h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h2v1H9zM15 4h1v1H15zM18 4h1v1H18zM22 4h1v1H22zM24 4h3v1H24zM28 4h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h1v1H8zM13 5h3v1H13zM19 5h1v1H19zM22 5h1v1H22zM28 5h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h7v1H22zM9 7h3v1H9zM14 7h7v1H14zM0 8h1v1H0zM3 8h1v1H3zM5 8h2v1H5zM8 8h1v1H8zM10 8h2v1H10zM13 8h1v1H13zM19 8h1v1H19zM21 8h1v1H21zM23 8h1v1H23zM1 9h1v1H1zM4 9h1v1H4zM7 9h1v1H7zM9 9h6v1H9zM17 9h2v1H17zM20 9h4v1H20zM25 9h1v1H25zM28 9h1v1H28zM0 10h1v1H0zM2 10h7v1H2zM10 10h2v1H10zM18 10h2v1H18zM21 10h3v1H21zM25 10h3v1H25zM0 11h3v1H0zM4 11h2v1H4zM13 11h3v1H13zM20 11h3v1H20zM26 11h2v1H26zM3 12h1v1H3zM5 12h2v1H5zM8 12h1v1H8zM10 12h1v1H10zM12 12h1v1H12zM14 12h1v1H14zM17 12h1v1H17zM20 12h4v1H20zM25 12h1v1H25zM27 12h2v1H27zM0 13h2v1H0zM3 13h1v1H3zM5 13h1v1H5zM7 13h4v1H7zM12 13h2v1H12zM16 13h6v1H16zM1 14h2v1H1zM4 14h4v1H4zM9 14h3v1H9zM13 14h2v1H13zM16 14h3v1H16zM22 14h7v1H22zM0 15h6v1H0zM10 15h1v1H10zM12 15h1v1H12zM15 15h1v1H15zM17 15h1v1H17zM20 15h1v1H20zM23 15h1v1H23zM25 15h1v1H25zM27 15h1v1H27zM0 16h1v1H0zM4 16h3v1H4zM10 16h2v1H10zM13 16h1v1H13zM16 16h3v1H16zM20 16h2v1H20zM23 16h1v1H23zM27 16h1v1H27zM1 17h5v1H1zM7 17h1v1H7zM12 17h3v1H12zM17 17h1v1H17zM20 17h1v1H20zM22 17h2v1H22zM25 17h1v1H25zM28 17h1v1H28zM0 18h1v1H0zM5 18h2v1H5zM9 18h3v1H9zM14 18h1v1H14zM17 18h1v1H17zM22 18h1v1H22zM24 18h1v1H24zM27 18h2v1H27zM4 19h2v1H4zM7 19h2v1H7zM11 19h2v1H11zM14 19h5v1H14zM20 19h4v1H20zM27 19h2v1H27zM0 20h1v1H0zM2 20h2v1H2zM6 20h2v1H6zM11 20h2v1H11zM15 20h1v1H15zM20 20h5v1H20zM26 20h1v1H26zM8 21h1v1H8zM10 21h1v1H10zM14 21h1v1H14zM19 21h2v1H19zM24 21h1v1H24zM26 21h3v1H26zM0 22h7v1H0zM9 22h1v1H9zM11 22h1v1H11zM16 22h1v1H16zM18 22h1v1H18zM20 22h1v1H20zM22 22h1v1H22zM24 22h1v1H24zM27 22h1v1H27zM0 23h1v1H0zM6 23h1v1H6zM8 23h1v1H8zM10 23h2v1H10zM14 23h1v1H14zM16 23h1v1H16zM18 23h1v1H18zM20 23h1v1H20zM24 23h3v1H24zM28 23h1v1H28zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM9 24h1v1H9zM11 24h2v1H11zM17 24h1v1H17zM20 24h5v1H20zM27 24h2v1H27zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM8 25h3v1H8zM13 25h1v1H13zM16 25h2v1H16zM22 25h1v1H22zM24 25h4v1H24zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM9 26h3v1H9zM16 26h2v1H16zM19 26h3v1H19zM24 26h3v1H24zM28 26h1v1H28zM0 27h1v1H0zM6 27h1v1H6zM10 27h1v1H10zM13 27h1v1H13zM16 27h2v1H16zM19 27h3v1H19zM27 27h1v1H27zM0 28h7v1H0zM8 28h2v1H8zM13 28h2v1H13zM16 28h3v1H16zM20 28h1v1H20zM24 28h2v1H24zM27 28h1v1H27z"/></svg>
+        <svg class="qr" data-app="listnudge" viewBox="-2 -2 33 33" role="img" aria-label="QR code for ListNudge on the App Store"><path d="M0 0h7v1H0zM8 0h1v1H8zM11 0h3v1H11zM15 0h1v1H15zM17 0h2v1H17zM20 0h1v1H20zM22 0h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM13 1h2v1H13zM17 1h1v1H17zM19 1h1v1H19zM22 1h1v1H22zM28 1h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM10 2h1v1H10zM12 2h1v1H12zM14 2h2v1H14zM17 2h2v1H17zM20 2h1v1H20zM22 2h1v1H22zM24 2h3v1H24zM28 2h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h1v1H8zM10 3h1v1H10zM12 3h2v1H12zM15 3h1v1H15zM18 3h2v1H18zM22 3h1v1H22zM24 3h3v1H24zM28 3h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h2v1H8zM13 4h1v1H13zM15 4h1v1H15zM18 4h1v1H18zM22 4h1v1H22zM24 4h3v1H24zM28 4h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h3v1H8zM12 5h1v1H12zM14 5h1v1H14zM16 5h1v1H16zM18 5h2v1H18zM22 5h1v1H22zM28 5h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h7v1H22zM8 7h1v1H8zM14 7h7v1H14zM0 8h1v1H0zM4 8h1v1H4zM6 8h3v1H6zM11 8h2v1H11zM14 8h1v1H14zM16 8h2v1H16zM20 8h6v1H20zM28 8h1v1H28zM1 9h1v1H1zM4 9h2v1H4zM7 9h4v1H7zM13 9h1v1H13zM15 9h1v1H15zM22 9h1v1H22zM24 9h5v1H24zM1 10h2v1H1zM6 10h1v1H6zM8 10h1v1H8zM11 10h1v1H11zM15 10h1v1H15zM17 10h1v1H17zM20 10h1v1H20zM24 10h1v1H24zM28 10h1v1H28zM0 11h2v1H0zM7 11h1v1H7zM9 11h1v1H9zM12 11h1v1H12zM16 11h2v1H16zM19 11h1v1H19zM21 11h1v1H21zM23 11h1v1H23zM25 11h1v1H25zM27 11h2v1H27zM0 12h1v1H0zM3 12h4v1H3zM8 12h1v1H8zM10 12h5v1H10zM16 12h2v1H16zM19 12h3v1H19zM23 12h1v1H23zM27 12h1v1H27zM0 13h1v1H0zM2 13h2v1H2zM7 13h1v1H7zM9 13h2v1H9zM12 13h1v1H12zM14 13h2v1H14zM22 13h7v1H22zM1 14h6v1H1zM11 14h7v1H11zM21 14h3v1H21zM25 14h2v1H25zM28 14h1v1H28zM1 15h1v1H1zM3 15h2v1H3zM11 15h1v1H11zM13 15h1v1H13zM16 15h2v1H16zM19 15h2v1H19zM22 15h2v1H22zM27 15h2v1H27zM0 16h1v1H0zM2 16h1v1H2zM4 16h7v1H4zM12 16h2v1H12zM16 16h3v1H16zM20 16h2v1H20zM23 16h1v1H23zM27 16h1v1H27zM0 17h1v1H0zM3 17h1v1H3zM5 17h1v1H5zM9 17h1v1H9zM11 17h1v1H11zM13 17h3v1H13zM17 17h2v1H17zM20 17h6v1H20zM27 17h2v1H27zM2 18h5v1H2zM8 18h1v1H8zM11 18h2v1H11zM15 18h1v1H15zM18 18h1v1H18zM20 18h4v1H20zM26 18h1v1H26zM28 18h1v1H28zM2 19h4v1H2zM7 19h1v1H7zM9 19h1v1H9zM12 19h1v1H12zM14 19h5v1H14zM20 19h4v1H20zM27 19h2v1H27zM0 20h4v1H0zM6 20h1v1H6zM10 20h1v1H10zM12 20h6v1H12zM19 20h7v1H19zM28 20h1v1H28zM8 21h1v1H8zM12 21h1v1H12zM15 21h1v1H15zM17 21h4v1H17zM24 21h1v1H24zM28 21h1v1H28zM0 22h7v1H0zM8 22h1v1H8zM10 22h1v1H10zM12 22h4v1H12zM17 22h1v1H17zM19 22h2v1H19zM22 22h1v1H22zM24 22h3v1H24zM28 22h1v1H28zM0 23h1v1H0zM6 23h1v1H6zM9 23h3v1H9zM13 23h1v1H13zM17 23h4v1H17zM24 23h1v1H24zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM8 24h6v1H8zM16 24h2v1H16zM19 24h7v1H19zM27 24h1v1H27zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM9 25h1v1H9zM11 25h5v1H11zM18 25h4v1H18zM23 25h1v1H23zM28 25h1v1H28zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM9 26h1v1H9zM11 26h3v1H11zM15 26h6v1H15zM25 26h4v1H25zM0 27h1v1H0zM6 27h1v1H6zM10 27h1v1H10zM17 27h1v1H17zM20 27h3v1H20zM25 27h1v1H25zM27 27h2v1H27zM0 28h7v1H0zM8 28h1v1H8zM11 28h1v1H11zM16 28h3v1H16zM20 28h1v1H20zM24 28h2v1H24zM27 28h1v1H27z"/></svg>
+          <figcaption>SCAN TO BEAM<br>TO YOUR IPHONE</figcaption>
+        </figure>
       </div>
     </aside>
   </div>
 </section>
 <script>
-  // Hovering or focusing a ship puts its name, platform and pitch on the readout.
+  // Hovering or focusing a ship puts its name, platform, pitch and launch buttons on the readout.
   (() => {
     const hangar = document.querySelector('.hangar');
     const readout = hangar.querySelector('.readout');
+    const beam = readout.querySelector('.beam');
     const show = ship => {
       hangar.querySelectorAll('.ship.is-active').forEach(s => s.classList.remove('is-active'));
       ship.classList.add('is-active');
@@ -357,6 +400,20 @@
       readout.querySelector('.readout-name').textContent = ship.querySelector('.ship-name').textContent;
       readout.querySelector('.readout-where').textContent = ship.dataset.where;
       readout.querySelector('.readout-pitch').textContent = ship.dataset.pitch;
+      // iOS apps launch straight to the App Store (and beam a QR to the visitor's phone);
+      // everything else launches its own site or repo.
+      const launch = readout.querySelector('.launch');
+      const alt = readout.querySelector('.launch-alt');
+      const site = new URL(ship.href);
+      const github = site.hostname === 'github.com';
+      launch.href = ship.dataset.store || ship.href;
+      launch.textContent = ship.dataset.store ? 'Get it on the App Store →'
+        : github ? 'View on GitHub ↗' : `Launch ${site.hostname} →`;
+      alt.hidden = !ship.dataset.store;
+      alt.href = ship.href;
+      alt.textContent = site.hostname;
+      beam.hidden = !ship.dataset.qr;
+      beam.querySelectorAll('.qr').forEach(qr => qr.classList.toggle('is-on', qr.dataset.app === ship.dataset.qr));
     };
     hangar.querySelectorAll('.ship').forEach(ship => {
       ship.addEventListener('mouseenter', () => show(ship));
