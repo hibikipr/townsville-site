@@ -106,14 +106,10 @@
     width: 76px; padding: 8px 4px 6px; border-radius: 12px; border: 1px solid transparent;
     transition: background-color .2s, border-color .2s, transform .2s;
   }
-  .ship img, .ship .glyph {
+  .ship img {
     width: 48px; height: 48px; border-radius: 12px;
     box-shadow: 0 0 14px color-mix(in srgb, var(--saber) 30%, transparent);
     transition: box-shadow .2s;
-  }
-  .ship .glyph {
-    display: grid; place-items: center; font-family: "JetBrains Mono"; font-weight: 500; font-size: 13px;
-    color: #06101f; background: linear-gradient(145deg, var(--tint), var(--saber));
   }
   .ship .ship-name {
     font-family: "JetBrains Mono"; font-size: 10px; color: var(--body);
@@ -129,8 +125,7 @@
     border-color: color-mix(in srgb, var(--saber) 45%, transparent);
     transform: translateY(-2px);
   }
-  .ship:hover img, .ship:hover .glyph, .ship:focus-visible img, .ship:focus-visible .glyph,
-  .ship.is-active img, .ship.is-active .glyph { box-shadow: 0 0 22px var(--saber); }
+  .ship:hover img, .ship:focus-visible img, .ship.is-active img { box-shadow: 0 0 22px var(--saber); }
   .ship:hover .ship-name, .ship:focus-visible .ship-name, .ship.is-active .ship-name { color: var(--ink); }
   .readout {
     position: relative; margin-top: 14px; padding: 14px 16px; border-radius: 12px;
@@ -330,11 +325,11 @@
           </a>
           <a class="ship" href="https://github.com/hibikipr/filament_to_bambuddy" target="_blank" rel="noopener" style="--saber:#5cff7a; --tint:#d4ffdc;"
              data-pitch="Scan a filament box and add it straight to your Bambuddy spool inventory." data-where="Open source · GitHub">
-            <span class="glyph" aria-hidden="true">f→b</span><span class="ship-name">filament_to_bambuddy</span>
+            <img src="assets/filament-to-bambuddy-icon.webp" alt=""><span class="ship-name">filament_to_bambuddy</span>
           </a>
           <a class="ship" href="https://github.com/hibikipr/bambuddy_to_manyfold" target="_blank" rel="noopener" style="--saber:#4ce6d2; --tint:#d2fff7;"
              data-pitch="Sync models from Bambuddy's file manager into your Manyfold library." data-where="Open source · GitHub">
-            <span class="glyph" aria-hidden="true">b→m</span><span class="ship-name">bambuddy_to_manyfold</span>
+            <img src="assets/bambuddy-to-manyfold-icon.webp" alt=""><span class="ship-name">bambuddy_to_manyfold</span>
           </a>
         </div>
       </div>
@@ -456,13 +451,19 @@
     <div class="card-grid">
       <a class="card" href="https://github.com/hibikipr/filament_to_bambuddy" target="_blank" rel="noopener" style="--saber:#5cff7a; --tint:#d4ffdc; --label:#8dffa4;">
         <span class="stripe"></span>
-        <div class="name-row"><h3>filament_to_bambuddy</h3></div>
+        <div class="name-row">
+          <img src="assets/filament-to-bambuddy-icon.webp" alt="filament_to_bambuddy app icon">
+          <h3>filament_to_<wbr>bambuddy</h3>
+        </div>
         <p class="desc">Scan a filament box and add it straight to your Bambuddy spool inventory.</p>
         <span class="link-label">GitHub ↗</span>
       </a>
       <a class="card" href="https://github.com/hibikipr/bambuddy_to_manyfold" target="_blank" rel="noopener" style="--saber:#4ce6d2; --tint:#d2fff7; --label:#7cf0e0;">
         <span class="stripe"></span>
-        <div class="name-row"><h3>bambuddy_to_manyfold</h3></div>
+        <div class="name-row">
+          <img src="assets/bambuddy-to-manyfold-icon.webp" alt="bambuddy_to_manyfold app icon">
+          <h3>bambuddy_to_<wbr>manyfold</h3>
+        </div>
         <p class="desc">Sync models from Bambuddy's file manager into your Manyfold library.</p>
         <span class="link-label">GitHub ↗</span>
       </a>
