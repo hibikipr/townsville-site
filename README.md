@@ -38,4 +38,5 @@ afterward once the cert shows `approved`.
 - [homesiem-site](https://github.com/hibikipr/homesiem-site)
 - [listnudge-site](https://github.com/hibikipr/listnudge-site)
 - [nozzlecast-site](https://github.com/hibikipr/nozzlecast-site)
+- [hullpatch-site](https://github.com/hibikipr/hullpatch-site)
 - [kaireads-site](https://github.com/hibikipr/kaireads-site)
